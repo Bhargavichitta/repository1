@@ -1,0 +1,26 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:   
+      APP_NAME: "Bhargavi"
+      DEPLOY_REGION: "us-east-1"
+    steps: 
+      - name: build_stage
+        run: echo "Building $APP_NAME for region $DEPLOY_REGION"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  
+    steps:
+      - name: deploy_stage
+        run: |
+          echo "Deploying $APP_NAME..."
+          echo "Using secret token: ${{ secrets.SECRETKEY }}"
+          echo "Deployment finished!"
