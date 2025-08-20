@@ -1,0 +1,23 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    environment: deploy
+    steps: 
+      - name: build_stage
+        run: echo "Building........"
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build  
+    steps:
+      - name: deploy_stage
+        run: |
+          echo "Using secret token: ${{ secrets.SECRETKEY }}"
+          echo "Deployment finished!"
